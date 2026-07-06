@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>La Patrona - Rotisería Boutique</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "on-tertiary-fixed": "#2d1417",
+                      "on-secondary-fixed": "#1d1c16",
+                      "secondary-fixed": "#e7e2d8",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "primary": "#061b0e",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#1b1c1c",
+                      "surface-variant": "#e4e2e1",
+                      "background": "#fcf9f8",
+                      "tertiary": "#271013",
+                      "on-tertiary-container": "#b0898c",
+                      "primary-fixed": "#d0e9d4",
+                      "surface": "#fcf9f8",
+                      "secondary": "#615e57",
+                      "surface-bright": "#fcf9f8",
+                      "surface-container": "#f0eded",
+                      "secondary-fixed-dim": "#cac6bd",
+                      "surface-container-highest": "#e4e2e1",
+                      "on-tertiary-fixed-variant": "#5d3f42",
+                      "on-surface": "#1b1c1c",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-container": "#67645c",
+                      "surface-container-low": "#f6f3f2",
+                      "tertiary-fixed": "#ffd9dc",
+                      "surface-container-high": "#eae7e7",
+                      "tertiary-container": "#3f2427",
+                      "on-primary-fixed-variant": "#364c3c",
+                      "primary-container": "#1b3022",
+                      "outline-variant": "#c3c8c1",
+                      "tertiary-fixed-dim": "#e7bcbf",
+                      "on-secondary-fixed-variant": "#494740",
+                      "inverse-on-surface": "#f3f0f0",
+                      "surface-tint": "#4d6453",
+                      "surface-dim": "#dcd9d9",
+                      "inverse-surface": "#303030",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#0b2013",
+                      "secondary-container": "#e7e2d8",
+                      "on-error-container": "#93000a",
+                      "outline": "#737973",
+                      "on-secondary": "#ffffff",
+                      "on-primary-container": "#819986",
+                      "on-surface-variant": "#434843",
+                      "primary-fixed-dim": "#b4cdb8",
+                      "inverse-primary": "#b4cdb8"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "80px",
+                      "base": "8px",
+                      "margin-desktop": "64px",
+                      "md": "24px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "xs": "4px",
+                      "lg": "48px",
+                      "sm": "12px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Libre Caslon Text"],
+                      "price-display": ["Work Sans"],
+                      "headline-lg-mobile": ["Libre Caslon Text"],
+                      "headline-md": ["Libre Caslon Text"],
+                      "label-lg": ["Work Sans"],
+                      "body-lg": ["Work Sans"],
+                      "headline-lg": ["Libre Caslon Text"],
+                      "body-md": ["Work Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "price-display": ["20px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+    <style>
+        .dotted-leader {
+            flex-grow: 1;
+            border-bottom: 2px dotted #c3c8c1;
+            margin: 0 8px;
+            height: 14px;
+        }
+
+        .cart-badge {
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+            .cart-badge.bump {
+                transform: scale(1.4);
+            }
+
+        .rustic-shadow {
+            box-shadow: 0 10px 30px -5px rgba(6, 27, 14, 0.1);
+        }
+
+        body {
+            background-color: #fcf9f8;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed">
+    <header class="bg-background/95 backdrop-blur-md sticky top-0 z-[60] border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile py-base" id="top-bar">
+        <div class="flex items-center gap-2">
+            <img alt="Logo La Patrona" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDphjIu41jOGzJIB7rdB2VeqrQRT8s9r5ykSPJwR6_hkHYi9QEC1Y5BtLmdETEm-2k3FGHMXpN9-Z1E3Z16_EZCVULTjE6f0W1iWvgIgewqgu6DlXq3_DyW26ZBtgoHtDoimLjdNuAGNWldSuWY2kE_EgJgCWaHvpigm4bMViV5-6V246h_JrX1fWuzpPJfesRIuRnqAiJupFeUURoT3BJA5a74g-KanTaPO1O-M9cOq1tB_JaQqh7PycM4uZcooa_owMA" />
+            <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">La Patrona</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button class="text-primary font-label-lg text-label-lg bg-secondary-container px-4 py-2 rounded-full active:scale-95 transition-transform" onclick="scrollToMenu()">
+                Menú
+            </button>
+            <div class="relative" onclick="openCart()">
+                <span class="material-symbols-outlined text-primary cursor-pointer p-2">shopping_cart</span>
+                <span class="absolute -top-1 -right-1 bg-tertiary text-on-tertiary text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold hidden cart-badge" id="cart-count">0</span>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-[600px] mx-auto pb-32">
+        <section class="relative overflow-hidden pt-12 pb-16 px-margin-mobile" id="hero">
+            <div class="relative z-10 text-center space-y-4">
+                <div class="inline-block px-4 py-1 bg-primary-fixed text-on-primary-fixed-variant rounded-full text-[12px] font-bold tracking-widest mb-2">ROTISERÍA BOUTIQUE</div>
+                <h2 class="font-display-lg text-display-lg text-primary leading-tight">Sabores que te hacen sentir en casa</h2>
+                <p class="text-secondary font-body-lg text-body-lg max-w-xs mx-auto">Tradición criolla con el toque gourmet de Valle Hermoso.</p>
+            </div>
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-on-tertiary-container rounded-full blur-3xl -ml-32 -mb-32"></div>
+            </div>
+        </section>
+        <section class="px-margin-mobile mb-xl" id="offers">
+            <h3 class="font-headline-md text-headline-md text-primary mb-6">Ofertas del Día</h3>
+            <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <div class="flex-none w-[85%] snap-center rounded-xl overflow-hidden rustic-shadow bg-surface-container-lowest border border-outline-variant">
+                    <img class="w-full h-48 object-cover" data-alt="Close-up of a juicy Lomito Completo sandwich, featuring thinly sliced steak, ham, cheese, fried egg, lettuce, and tomato in crusty bread, set on a rustic wooden table with a side of chimichurri. The lighting is warm and golden, highlighting the textures of the bread and the succulent meat, consistent with a high-end Argentine rotisserie aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjq101a3zVK9N1xZhiTitoaDYWdFLNedYctPAWrH-Rr0jl3asCNdkPeUbmg-8-TCsvYdtkOHb_4ETjrWQw1oq2Q0HGc11YVYvb_lZs7_guvzDG6Pqj2onZH3eUUyjnvp-dqI_p4JPGF3IA7XcixeB5pwzSRdDIRiiVuxFGFnmZKsc1GIH-tW9EfFM36wwTmfR49JzInlWS0Gwxa7yeiTobrbo3qOGs8R3gep_x1BAqh715uXAzRDACbw" />
+                    <div class="p-4 flex justify-between items-center">
+                        <div>
+                            <p class="font-headline-md text-[18px] text-primary">Combo Lomito</p>
+                            <p class="text-secondary text-[14px]">Con Papas Fritas</p>
+                        </div>
+                        <p class="font-price-display text-price-display text-primary">$12.500</p>
+                    </div>
+                </div>
+                <div class="flex-none w-[85%] snap-center rounded-xl overflow-hidden rustic-shadow bg-surface-container-lowest border border-outline-variant">
+                    <img class="w-full h-48 object-cover" data-alt="A gourmet beef burger piled high with crispy bacon, melted cheddar cheese, pickles, onions, and fresh lettuce, served with a basket of golden fries. The scene is set in a cozy, rustic restaurant with brick walls and warm hanging lights, emphasizing a premium artisanal meal experience. The color palette is rich with deep greens and warm ochres." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWNQ6NYflvTbcfxR9bfWdmt3hzm0OiwTkdGG6QRpwmKQ3PmLLa-Sk-TcCzOhWNzuaWxudEts8_a7hy6tJH_uwyGnVspz_DzL3DcvwW8js6TXmT_Z_ADO8YVQVA-1x22DKlhkpwK7NH2Z7X7OsRk6yrxDzHIlllHpKR4fct448NeNYA_cOyW46ROSFNEsmpEK8-K5t_dmJ3HmZatw3QUebAtskxb9NEA8L7O2DxJvSjvoJPMTcCRQg4KA" />
+                    <div class="p-4 flex justify-between items-center">
+                        <div>
+                            <p class="font-headline-md text-[18px] text-primary">Promo Burger</p>
+                            <p class="text-secondary text-[14px]">Bacon &amp; Cheddar</p>
+                        </div>
+                        <p class="font-price-display text-price-display text-primary">$9.800</p>
+                    </div>
+                </div>
+                <div class="flex-none w-[85%] snap-center rounded-xl overflow-hidden rustic-shadow bg-surface-container-lowest border border-outline-variant">
+                    <img class="w-full h-48 object-cover" data-alt="A steaming hot Pizza Muzza with thick, melted mozzarella cheese and green olives, sliced and ready to serve on a wooden board. In the background, a traditional brick oven with a glowing fire creates a warm, authentic atmosphere. The lighting is soft and inviting, focusing on the bubbly cheese and rustic crust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz9066UebEdRmrLTXf9gXXb-AidGAJv6g8WSLWerVOUoP3b-WcQ16_1MpBtu0q4XwhGtqkDxasnpgerUGCsc7sWtYrrMakrl2zbV1IgNcQNmCA4YwVfWrekjaNVmXDa1RoQx9onpsHChQQ41zkKfbj7L5pUoyKQBOW3oio5ZuLfu8pFBqw-DcT1UNuDTwhsm85OMw2e-mJg5CxARVkLGYbGyLXayAIqkjD_ras4uUtL06qjcUapRdiaQ" />
+                    <div class="p-4 flex justify-between items-center">
+                        <div>
+                            <p class="font-headline-md text-[18px] text-primary">Pizza Familiar</p>
+                            <p class="text-secondary text-[14px]">Muzzarella + 1 Gaseosa</p>
+                        </div>
+                        <p class="font-price-display text-price-display text-primary">$10.200</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="px-margin-mobile mb-xl" id="menu-section">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="font-headline-md text-headline-md text-primary">Nuestra Carta</h3>
+                <span class="material-symbols-outlined text-secondary opacity-50">restaurant_menu</span>
+            </div>
+            <div class="space-y-6">
+                <!-- Lomito Completo -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Argentinian Lomito Completo sandwich detailed close-up." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjq101a3zVK9N1xZhiTitoaDYWdFLNedYctPAWrH-Rr0jl3asCNdkPeUbmg-8-TCsvYdtkOHb_4ETjrWQw1oq2Q0HGc11YVYvb_lZs7_guvzDG6Pqj2onZH3eUUyjnvp-dqI_p4JPGF3IA7XcixeB5pwzSRdDIRiiVuxFGFnmZKsc1GIH-tW9EfFM36wwTmfR49JzInlWS0Gwxa7yeiTobrbo3qOGs8R3gep_x1BAqh715uXAzRDACbw" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Lomito Completo</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$11.500</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">Lomo, jamón, queso, huevo, lechuga y tomate.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Lomito Completo', 11500, 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjq101a3zVK9N1xZhiTitoaDYWdFLNedYctPAWrH-Rr0jl3asCNdkPeUbmg-8-TCsvYdtkOHb_4ETjrWQw1oq2Q0HGc11YVYvb_lZs7_guvzDG6Pqj2onZH3eUUyjnvp-dqI_p4JPGF3IA7XcixeB5pwzSRdDIRiiVuxFGFnmZKsc1GIH-tW9EfFM36wwTmfR49JzInlWS0Gwxa7yeiTobrbo3qOGs8R3gep_x1BAqh715uXAzRDACbw')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Hamburguesa Gourmet -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Gourmet Burger with bacon and cheddar close-up." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWNQ6NYflvTbcfxR9bfWdmt3hzm0OiwTkdGG6QRpwmKQ3PmLLa-Sk-TcCzOhWNzuaWxudEts8_a7hy6tJH_uwyGnVspz_DzL3DcvwW8js6TXmT_Z_ADO8YVQVA-1x22DKlhkpwK7NH2Z7X7OsRk6yrxDzHIlllHpKR4fct448NeNYA_cOyW46ROSFNEsmpEK8-K5t_dmJ3HmZatw3QUebAtskxb9NEA8L7O2DxJvSjvoJPMTcCRQg4KA" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Hamburguesa Gourmet</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$9.200</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">200g carne vacuna, bacon, cheddar, cebolla caramelizada.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Hamburguesa Gourmet', 9200, 'https://lh3.googleusercontent.com/aida-public/AB6AXuAWNQ6NYflvTbcfxR9bfWdmt3hzm0OiwTkdGG6QRpwmKQ3PmLLa-Sk-TcCzOhWNzuaWxudEts8_a7hy6tJH_uwyGnVspz_DzL3DcvwW8js6TXmT_Z_ADO8YVQVA-1x22DKlhkpwK7NH2Z7X7OsRk6yrxDzHIlllHpKR4fct448NeNYA_cOyW46ROSFNEsmpEK8-K5t_dmJ3HmZatw3QUebAtskxb9NEA8L7O2DxJvSjvoJPMTcCRQg4KA')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Pizza Muzza -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Traditional Mozzarella Pizza from a wood-fire oven." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz9066UebEdRmrLTXf9gXXb-AidGAJv6g8WSLWerVOUoP3b-WcQ16_1MpBtu0q4XwhGtqkDxasnpgerUGCsc7sWtYrrMakrl2zbV1IgNcQNmCA4YwVfWrekjaNVmXDa1RoQx9onpsHChQQ41zkKfbj7L5pUoyKQBOW3oio5ZuLfu8pFBqw-DcT1UNuDTwhsm85OMw2e-mJg5CxARVkLGYbGyLXayAIqkjD_ras4uUtL06qjcUapRdiaQ" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Pizza Muzza</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$8.500</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">Muzzarella premium, orégano y aceitunas verdes.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Pizza Muzza', 8500, 'https://lh3.googleusercontent.com/aida-public/AB6AXuCz9066UebEdRmrLTXf9gXXb-AidGAJv6g8WSLWerVOUoP3b-WcQ16_1MpBtu0q4XwhGtqkDxasnpgerUGCsc7sWtYrrMakrl2zbV1IgNcQNmCA4YwVfWrekjaNVmXDa1RoQx9onpsHChQQ41zkKfbj7L5pUoyKQBOW3oio5ZuLfu8pFBqw-DcT1UNuDTwhsm85OMw2e-mJg5CxARVkLGYbGyLXayAIqkjD_ras4uUtL06qjcUapRdiaQ')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Choripán Criollo -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Professional food photography for a rotisería menu. A classic Argentinian Choripán (chorizo sandwich) with chimichurri sauce. Warm lighting, rustic background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBu7NJ9BzYod-G96nj3aJec0Fi1StfJu0DdbC0KVlJnKGewMUuW1nI2O7XI9AGtiKRs-fNEQDmpZjRZ2mSrk2wudyQas9F7IeLuBt1xv2vQN2_PyE9UEmyVhM5cqnUK7_qeQY3N_2ZtWVAMi1s0JkxQDONlMQvHbzyhMARcHQKM8IbLXHfBd-LwCF5fTzYkdImFIVX6rEWcSNZlzmiopPF6vZ0AvQ6V8ybnNL64aiN-HFg-qSf5Y_ckVw" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Choripán Criollo</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$5.800</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">Chorizo de cerdo puro con nuestro chimichurri secreto.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Choripán Criollo', 5800, 'https://lh3.googleusercontent.com/aida-public/AB6AXuBu7NJ9BzYod-G96nj3aJec0Fi1StfJu0DdbC0KVlJnKGewMUuW1nI2O7XI9AGtiKRs-fNEQDmpZjRZ2mSrk2wudyQas9F7IeLuBt1xv2vQN2_PyE9UEmyVhM5cqnUK7_qeQY3N_2ZtWVAMi1s0JkxQDONlMQvHbzyhMARcHQKM8IbLXHfBd-LwCF5fTzYkdImFIVX6rEWcSNZlzmiopPF6vZ0AvQ6V8ybnNL64aiN-HFg-qSf5Y_ckVw')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Pollo a la Parrilla -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Professional food photography for a rotisería menu. Grilled chicken (pollo a la parrilla) served with golden french fries and a small salad. Warm lighting, rustic background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQJu6b93e4s9BsPglQFQNyB-1A-fBLD9z3Im6SslnlwExIb5s2ZJu9cSnpQRRzZ7X4hrZSMnXeROFG-6wEcKX0y0cOuCJnSl6zlJAxooSUbbZgnKjA-SBxqxSeMKmgd3viqL2ovmjam3qtY_sjUHL6ur0tet4JZ-hdfjQakYyOLuHiB8zWW6thKvCG8HfPU3SglsYXy2C8X8TkdxyfAzFAyXhKkSkbEVNZIZQQHLYWhEgfePujv46uKA" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Pollo con Papas</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$12.800</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">1/2 Pollo al limón con papas fritas doradas.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Pollo con Papas', 12800, 'https://lh3.googleusercontent.com/aida-public/AB6AXuCQJu6b93e4s9BsPglQFQNyB-1A-fBLD9z3Im6SslnlwExIb5s2ZJu9cSnpQRRzZ7X4hrZSMnXeROFG-6wEcKX0y0cOuCJnSl6zlJAxooSUbbZgnKjA-SBxqxSeMKmgd3viqL2ovmjam3qtY_sjUHL6ur0tet4JZ-hdfjQakYyOLuHiB8zWW6thKvCG8HfPU3SglsYXy2C8X8TkdxyfAzFAyXhKkSkbEVNZIZQQHLYWhEgfePujv46uKA')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Barroluco -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <img class="w-24 h-24 rounded-lg object-cover flex-shrink-0" data-alt="Professional food photography for a rotisería menu. A traditional 'Barroluco' (steak and cheese sandwich) from South America. Warm lighting, rustic background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKx4rjuv_c9pryc2BFIVYaiNQrwGUAAhL1K1va9o2LZI9KFpVPC44Ulh3guhPp9HbYkvTE-n28b1WrOLJKPf6Wz1UuOZZhfecc7gmvyNUmL4tanFvIajj8ieoJpSg4rdS5WYknqNDX44ZTXx6vPT6aeFYb0A1kYQeT6GeIL9RS_J3Wa0r5PcJWXc0JWPWlVqjXGgaMQU2DzwYHsUjaaDl7NDJJhAwyclRnV3kXSjwaWoZrxq8PKT0R8Q" />
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Barroluco Tradicional</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$10.500</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">El clásico de carne y queso, fundido a la perfección.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Barroluco Tradicional', 10500, 'https://lh3.googleusercontent.com/aida-public/AB6AXuDKx4rjuv_c9pryc2BFIVYaiNQrwGUAAhL1K1va9o2LZI9KFpVPC44Ulh3guhPp9HbYkvTE-n28b1WrOLJKPf6Wz1UuOZZhfecc7gmvyNUmL4tanFvIajj8ieoJpSg4rdS5WYknqNDX44ZTXx6vPT6aeFYb0A1kYQeT6GeIL9RS_J3Wa0r5PcJWXc0JWPWlVqjXGgaMQU2DzwYHsUjaaDl7NDJJhAwyclRnV3kXSjwaWoZrxq8PKT0R8Q')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Lomos de Pollo -->
+                <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                    <div class="w-24 h-24 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-secondary opacity-40 text-4xl">flatware</span>
+                    </div>
+                    <div class="flex-grow">
+                        <div class="flex items-center">
+                            <span class="font-label-lg text-label-lg text-primary">Lomos de Pollo</span>
+                            <div class="dotted-leader"></div>
+                            <span class="font-price-display text-price-display text-primary">$10.200</span>
+                        </div>
+                        <p class="text-secondary text-[13px] mt-1 line-clamp-2">Pechuga de pollo fileteada, queso y vegetales.</p>
+                        <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Lomos de Pollo', 10200, 'placeholder')">
+                            <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                        </button>
+                    </div>
+                </div>
+                <!-- Bebidas Section -->
+                <div class="pt-8 pb-4">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-6">Bebidas</h3>
+                    <div class="space-y-6">
+                        <!-- Vino de la Casa -->
+                        <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                            <img alt="Vino de la Casa" class="w-24 h-24 rounded-lg object-cover flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgp3iTEVeFICm_980wt7M29AgCR9OO8YiiHoLBCx5Hbu23sAKlVDlFgiWGWU7HK7P5DVX0rUC1CGWGGU-5WpAdZLU6Q8wAv9yJqdrQckjqYisB1ZDAO0oN60Aj-VgDxLwAIl4QiUR5nQ2nUHIIl6QZUXRLG95PxIu1NYe9R-zuRjoQBjikrZ0RI-wdkM1ILriddJ0w0oiAucBnuZUV7lOmJdFd-7aWAgm7j1RDT2Gr6HQBQkeyW_CvRg" />
+                            <div class="flex-grow">
+                                <div class="flex items-center">
+                                    <span class="font-label-lg text-label-lg text-primary">Vino de la Casa</span>
+                                    <div class="dotted-leader"></div>
+                                    <span class="font-price-display text-price-display text-primary">$3.200</span>
+                                </div>
+                                <p class="text-secondary text-[13px] mt-1 line-clamp-2">Copa de vino tinto selección especial.</p>
+                                <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Vino de la Casa', 3200, 'https://lh3.googleusercontent.com/aida-public/AB6AXuDgp3iTEVeFICm_980wt7M29AgCR9OO8YiiHoLBCx5Hbu23sAKlVDlFgiWGWU7HK7P5DVX0rUC1CGWGGU-5WpAdZLU6Q8wAv9yJqdrQckjqYisB1ZDAO0oN60Aj-VgDxLwAIl4QiUR5nQ2nUHIIl6QZUXRLG95PxIu1NYe9R-zuRjoQBjikrZ0RI-wdkM1ILriddJ0w0oiAucBnuZUV7lOmJdFd-7aWAgm7j1RDT2Gr6HQBQkeyW_CvRg')">
+                                    <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Cerveza Artesanal -->
+                        <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                            <div class="w-24 h-24 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-secondary opacity-40 text-4xl">sports_bar</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center">
+                                    <span class="font-label-lg text-label-lg text-primary">Cerveza Artesanal</span>
+                                    <div class="dotted-leader"></div>
+                                    <span class="font-price-display text-price-display text-primary">$4.500</span>
+                                </div>
+                                <p class="text-secondary text-[13px] mt-1 line-clamp-2">Pinta de 500ml, rubia o roja.</p>
+                                <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Cerveza Artesanal', 4500, 'placeholder')">
+                                    <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Gaseosa 500ml -->
+                        <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                            <div class="w-24 h-24 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-secondary opacity-40 text-4xl">local_drink</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center">
+                                    <span class="font-label-lg text-label-lg text-primary">Gaseosa 500ml</span>
+                                    <div class="dotted-leader"></div>
+                                    <span class="font-price-display text-price-display text-primary">$2.100</span>
+                                </div>
+                                <p class="text-secondary text-[13px] mt-1 line-clamp-2">Línea Coca-Cola, variedad de sabores.</p>
+                                <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Gaseosa 500ml', 2100, 'placeholder')">
+                                    <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Agua Mineral -->
+                        <div class="bg-surface-container-lowest rounded-xl p-3 border border-outline-variant flex gap-4 items-center">
+                            <div class="w-24 h-24 rounded-lg bg-secondary-container flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-secondary opacity-40 text-4xl">water_drop</span>
+                            </div>
+                            <div class="flex-grow">
+                                <div class="flex items-center">
+                                    <span class="font-label-lg text-label-lg text-primary">Agua Mineral</span>
+                                    <div class="dotted-leader"></div>
+                                    <span class="font-price-display text-price-display text-primary">$1.800</span>
+                                </div>
+                                <p class="text-secondary text-[13px] mt-1 line-clamp-2">500ml, con o sin gas.</p>
+                                <button class="mt-2 text-primary font-bold text-[12px] flex items-center gap-1 active:scale-95 transition-transform" onclick="addToCart('Agua Mineral', 1800, 'placeholder')">
+                                    <span class="material-symbols-outlined text-[18px]">add_circle</span> AGREGAR
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="w-full px-margin-mobile py-lg flex flex-col items-center gap-6 mb-20 bg-surface-container border-t border-outline-variant text-center">
+            <div class="flex flex-col items-center gap-2">
+                <p class="font-display-lg text-primary text-[24px]">La Patrona</p>
+                <p class="text-secondary text-sm max-w-xs">Av. Santa Teresa, Camino al Cuadrado, Valle Hermoso - Córdoba.</p>
+            </div>
+            <div class="flex gap-4">
+                <button class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-full font-label-lg hover:opacity-90 transition-opacity" onclick="shareQR()">
+                    <span class="material-symbols-outlined text-[18px]">share</span> Compartir QR
+                </button>
+            </div>
+            <p class="text-secondary opacity-60 text-xs">© 2024 La Patrona Rotisería. Hecho con amor.</p>
+        </footer>
+    </main>
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-surface-container-lowest shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-95 transition-transform" onclick="scrollToTop()">
+            <span class="material-symbols-outlined">home</span>
+            <span class="text-[10px] font-bold">Inicio</span>
+        </button>
+        <button class="flex flex-col items-center justify-center text-secondary p-2 active:scale-95 transition-transform" onclick="scrollToMenu()">
+            <span class="material-symbols-outlined">restaurant_menu</span>
+            <span class="text-[10px] font-bold">Menú</span>
+        </button>
+        <button class="flex flex-col items-center justify-center text-secondary p-2 active:scale-95 transition-transform" onclick="openCart()">
+            <span class="material-symbols-outlined">receipt_long</span>
+            <span class="text-[10px] font-bold">Pedidos</span>
+        </button>
+    </nav>
+    <!-- Cart Modal -->
+    <div class="fixed inset-0 z-[100] hidden" id="cart-modal">
+        <div class="absolute inset-0 bg-primary/20 backdrop-blur-sm" onclick="closeCart()"></div>
+        <div class="absolute bottom-0 left-0 w-full max-h-[90vh] bg-background rounded-t-3xl shadow-2xl flex flex-col overflow-hidden transition-transform translate-y-full" id="cart-content">
+            <div class="p-6 border-b border-outline-variant flex justify-between items-center">
+                <h3 class="font-headline-lg text-primary">Tu Pedido</h3>
+                <button class="material-symbols-outlined text-secondary" onclick="closeCart()">close</button>
+            </div>
+            <div class="flex-grow overflow-y-auto p-6 space-y-4" id="cart-items-list">
+                <!-- Items will be injected here -->
+            </div>
+            <div class="p-6 bg-surface-container space-y-4 border-t border-outline-variant">
+                <div class="flex flex-col gap-2">
+                    <label class="text-secondary font-bold text-xs uppercase tracking-wider">Forma de Entrega</label>
+                    <div class="flex gap-2">
+                        <button class="flex-1 py-2 rounded-lg bg-primary text-on-primary font-bold text-sm" id="btn-pickup" onclick="setDelivery(false)">Retiro Local</button>
+                        <button class="flex-1 py-2 rounded-lg bg-surface-container-lowest text-secondary font-bold text-sm border border-outline-variant" id="btn-delivery" onclick="setDelivery(true)">Delivery ($1.500)</button>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-secondary font-bold text-xs uppercase tracking-wider">Medio de Pago</label>
+                    <select class="w-full rounded-lg border-outline-variant bg-surface-container-lowest text-primary font-body-md focus:ring-primary focus:border-primary" id="payment-method">
+                        <option value="Efectivo">Efectivo al recibir</option>
+                        <option value="Transferencia">Transferencia Bancaria</option>
+                    </select>
+                </div>
+                <div class="space-y-1 pt-2">
+                    <div class="flex justify-between text-secondary">
+                        <span>Subtotal</span>
+                        <span id="cart-subtotal">$0</span>
+                    </div>
+                    <div class="flex justify-between text-secondary" id="delivery-row" style="display:none;">
+                        <span>Envío</span>
+                        <span>$1.500</span>
+                    </div>
+                    <div class="flex justify-between text-primary font-bold text-lg pt-2">
+                        <span>Total</span>
+                        <span id="cart-total">$0</span>
+                    </div>
+                </div>
+                <button class="w-full py-4 bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform" onclick="sendOrder()">
+                    <span class="material-symbols-outlined">send</span> Enviar por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let cart = [];
+        let isDelivery = false;
+        const deliveryCost = 1500;
+
+        function scrollToMenu() {
+            document.getElementById('menu-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function addToCart(name, price, img) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                cart.push({ name, price, img, qty: 1 });
+            }
+            updateCartCount();
+
+            // Animation bump
+            const badge = document.getElementById('cart-count');
+            badge.classList.remove('hidden');
+            badge.classList.add('bump');
+            setTimeout(() => badge.classList.remove('bump'), 300);
+        }
+
+        function updateCartCount() {
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const badge = document.getElementById('cart-count');
+            badge.innerText = totalItems;
+            if (totalItems > 0) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+        }
+
+        function openCart() {
+            renderCart();
+            const modal = document.getElementById('cart-modal');
+            const content = document.getElementById('cart-content');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                content.classList.remove('translate-y-full');
+            }, 10);
+        }
+
+        function closeCart() {
+            const content = document.getElementById('cart-content');
+            content.classList.add('translate-y-full');
+            setTimeout(() => {
+                document.getElementById('cart-modal').classList.add('hidden');
+            }, 300);
+        }
+
+        function renderCart() {
+            const list = document.getElementById('cart-items-list');
+            if (cart.length === 0) {
+                list.innerHTML = '<div class="text-center py-10 text-secondary"><span class="material-symbols-outlined text-4xl block mb-2">shopping_basket</span>Tu carrito está vacío</div>';
+                updateTotals();
+                return;
+            }
+
+            list.innerHTML = cart.map((item, index) => `
+                <div class="flex items-center gap-4 bg-surface-container-low p-3 rounded-xl">
+                    <img src="${item.img === 'placeholder' ? 'https://via.placeholder.com/60' : item.img}" class="w-16 h-16 rounded-lg object-cover" />
+                    <div class="flex-grow">
+                        <p class="font-bold text-primary">${item.name}</p>
+                        <p class="text-secondary text-sm">$${item.price.toLocaleString()}</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-background p-1 rounded-lg border border-outline-variant">
+                        <button onclick="changeQty(${index}, -1)" class="material-symbols-outlined text-sm">remove</button>
+                        <span class="font-bold w-4 text-center">${item.qty}</span>
+                        <button onclick="changeQty(${index}, 1)" class="material-symbols-outlined text-sm">add</button>
+                    </div>
+                </div>
+            `).join('');
+            updateTotals();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+            updateCartCount();
+        }
+
+        function setDelivery(val) {
+            isDelivery = val;
+            const btnPickup = document.getElementById('btn-pickup');
+            const btnDelivery = document.getElementById('btn-delivery');
+            const row = document.getElementById('delivery-row');
+
+            if (isDelivery) {
+                btnDelivery.classList.replace('bg-surface-container-lowest', 'bg-primary');
+                btnDelivery.classList.replace('text-secondary', 'text-on-primary');
+                btnPickup.classList.replace('bg-primary', 'bg-surface-container-lowest');
+                btnPickup.classList.replace('text-on-primary', 'text-secondary');
+                row.style.display = 'flex';
+            } else {
+                btnPickup.classList.replace('bg-surface-container-lowest', 'bg-primary');
+                btnPickup.classList.replace('text-secondary', 'text-on-primary');
+                btnDelivery.classList.replace('bg-primary', 'bg-surface-container-lowest');
+                btnDelivery.classList.replace('text-on-primary', 'text-secondary');
+                row.style.display = 'none';
+            }
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            const total = subtotal + (isDelivery ? deliveryCost : 0);
+            document.getElementById('cart-subtotal').innerText = `$${subtotal.toLocaleString()}`;
+            document.getElementById('cart-total').innerText = `$${total.toLocaleString()}`;
+        }
+
+        function sendOrder() {
+            if (cart.length === 0) return alert('¡Tu carrito está vacío!');
+
+            let message = "*Nuevo Pedido de La Patrona*%0A%0A";
+            cart.forEach(item => {
+                message += `- ${item.qty}x ${item.name} ($${(item.price * item.qty).toLocaleString()})%0A`;
+            });
+
+            message += `%0A*Entrega:* ${isDelivery ? 'Delivery (+$1500)' : 'Retiro en Local'}`;
+            message += `%0A*Pago:* ${document.getElementById('payment-method').value}`;
+            message += `%0A*TOTAL:* ${document.getElementById('cart-total').innerText}`;
+
+            const whatsappUrl = `https://wa.me/5493510000000?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function shareQR() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'La Patrona Rotisería',
+                    text: 'Mira el menú de La Patrona y pedí algo rico!',
+                    url: window.location.href
+                });
+            } else {
+                alert('Enlace copiado al portapapeles');
+            }
+        }
+    </script>
+</body>
+</html>

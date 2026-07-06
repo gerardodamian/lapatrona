@@ -1,0 +1,13 @@
+# Visual Studio
+.vs/
+
+# Archivos temporales
+bin/
+obj/
+
+# Logs
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
