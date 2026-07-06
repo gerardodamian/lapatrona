@@ -131,6 +131,80 @@
         ::-webkit-scrollbar {
             display: none;
         }
+
+        .qr-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .qr-modal-content {
+            background: #fff;
+            border-radius: 20px;
+            max-width: 420px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            animation: zoom .25s;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .qr-image {
+            width: 260px;
+            max-width: 100%;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .qr-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 35px;
+            cursor: pointer;
+        }
+
+        .qr-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+            .qr-buttons button {
+                background: #0b5d46;
+                color: white;
+                border: none;
+                padding: 12px 18px;
+                border-radius: 30px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: .3s;
+            }
+
+                .qr-buttons button:hover {
+                    opacity: .9;
+                }
     </style>
 </head>
 <body class="font-body-md text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed">
@@ -162,7 +236,7 @@
             </div>
         </section>
         <section class="px-margin-mobile mb-xl" id="offers">
-            <h3 class="font-headline-md text-headline-md text-primary mb-6">Ofertas del Día</h3>
+            <h3 class="font-headline-md text-headline-md text-primary mb-6">Ofertas de la Semana</h3>
             <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
                 <div class="flex-none w-[85%] snap-center rounded-xl overflow-hidden rustic-shadow bg-surface-container-lowest border border-outline-variant">
                     <img class="w-full h-48 object-cover" data-alt="Close-up of a juicy Lomito Completo sandwich, featuring thinly sliced steak, ham, cheese, fried egg, lettuce, and tomato in crusty bread, set on a rustic wooden table with a side of chimichurri. The lighting is warm and golden, highlighting the textures of the bread and the succulent meat, consistent with a high-end Argentine rotisserie aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjq101a3zVK9N1xZhiTitoaDYWdFLNedYctPAWrH-Rr0jl3asCNdkPeUbmg-8-TCsvYdtkOHb_4ETjrWQw1oq2Q0HGc11YVYvb_lZs7_guvzDG6Pqj2onZH3eUUyjnvp-dqI_p4JPGF3IA7XcixeB5pwzSRdDIRiiVuxFGFnmZKsc1GIH-tW9EfFM36wwTmfR49JzInlWS0Gwxa7yeiTobrbo3qOGs8R3gep_x1BAqh715uXAzRDACbw" />
@@ -389,8 +463,10 @@
                 <p class="text-secondary text-sm max-w-xs">Av. Santa Teresa, Camino al Cuadrado, Valle Hermoso - Córdoba.</p>
             </div>
             <div class="flex gap-4">
-                <button class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-full font-label-lg hover:opacity-90 transition-opacity" onclick="shareQR()">
-                    <span class="material-symbols-outlined text-[18px]">share</span> Compartir QR
+                <button class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-full font-label-lg hover:opacity-90 transition-opacity"
+                        onclick="openQRModal()">
+                    <span class="material-symbols-outlined text-[18px]">qr_code</span>
+                    Compartir QR
                 </button>
             </div>
             <p class="text-secondary opacity-60 text-xs">© 2024 La Patrona Rotisería. Hecho con amor.</p>
@@ -452,6 +528,35 @@
                 </div>
                 <button class="w-full py-4 bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-transform" onclick="sendOrder()">
                     <span class="material-symbols-outlined">send</span> Enviar por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal QR -->
+    <div id="qrModal" class="qr-modal">
+        <div class="qr-modal-content">
+            <span class="qr-close" onclick="closeQRModal()">&times;</span>
+
+            <h2>La Patrona Rotisería</h2>
+            <p>Escaneá el código para ver nuestro menú</p>
+
+            <img src="img/qr.png" alt="QR La Patrona" class="qr-image">
+
+            <div class="qr-buttons">
+                <button onclick="shareLink()">
+                    <span class="material-symbols-outlined">share</span>
+                    Compartir
+                </button>
+
+                <a href="img/qr.png" download="QR-LaPatrona.png">
+                    <button>
+                        <span class="material-symbols-outlined">download</span>
+                        Descargar
+                    </button>
+                </a>
+
+                <button onclick="closeQRModal()">
+                    Cerrar
                 </button>
             </div>
         </div>
@@ -588,19 +693,67 @@
 
             const whatsappUrl = `https://wa.me/5493510000000?text=${message}`;
             window.open(whatsappUrl, '_blank');
-        }
+}
 
-        function shareQR() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'La Patrona Rotisería',
-                    text: 'Mira el menú de La Patrona y pedí algo rico!',
-                    url: window.location.href
-                });
-            } else {
-                alert('Enlace copiado al portapapeles');
-            }
+function openQRModal() {
+    document.getElementById("qrModal").style.display = "flex";
+}
+
+function closeQRModal() {
+    document.getElementById("qrModal").style.display = "none";
+}
+
+async function shareLink() {
+
+    if (navigator.share) {
+
+        await navigator.share({
+            title: "La Patrona Rotisería",
+            text: "Mirá nuestro menú online",
+            url: "https://gerardodamian.github.io/lapatrona/"
+        });
+
+    } else {
+
+        navigator.clipboard.writeText("https://gerardodamian.github.io/lapatrona/");
+        alert("Se copió el enlace al portapapeles.");
+
+    }
+}
+
+// Cerrar haciendo clic fuera
+window.onclick = function (e) {
+    const modal = document.getElementById("qrModal");
+    if (e.target === modal) {
+        closeQRModal();
+    }
+}
+
+async function shareQR() {
+    const qrPath = "img/qr.png";
+
+    if (navigator.canShare && navigator.canShare({ files: [] })) {
+        try {
+            const response = await fetch(qrPath);
+            const blob = await response.blob();
+
+            const file = new File([blob], "QR-LaPatrona.png", {
+                type: blob.type
+            });
+
+            await navigator.share({
+                title: "La Patrona Rotisería",
+                text: "Escaneá este QR para ver nuestro menú.",
+                files: [file]
+            });
+
+        } catch (err) {
+            console.log(err);
         }
+    } else {
+        window.open(qrPath, "_blank");
+    }
+}
     </script>
 </body>
 </html>
