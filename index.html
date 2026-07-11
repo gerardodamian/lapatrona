@@ -5,6 +5,14 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>La Patrona - Rotisería Boutique</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" type="image/png" href="img/logo-la-patrona.png" />
+    <link rel="apple-touch-icon" href="img/logo-la-patrona.png" />
+    <meta name="theme-color" content="#061b0e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="La Patrona" />
+    <meta name="description" content="La Patrona — Rotisería boutique en Valle Hermoso, Córdoba. Pedidos por WhatsApp." />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
@@ -210,10 +218,15 @@
 <body class="font-body-md text-on-background selection:bg-primary-fixed selection:text-on-primary-fixed">
     <header class="bg-background/95 backdrop-blur-md sticky top-0 z-[60] border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile py-base" id="top-bar">
         <div class="flex items-center gap-2">
-            <img alt="Logo La Patrona" class="h-10 w-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDphjIu41jOGzJIB7rdB2VeqrQRT8s9r5ykSPJwR6_hkHYi9QEC1Y5BtLmdETEm-2k3FGHMXpN9-Z1E3Z16_EZCVULTjE6f0W1iWvgIgewqgu6DlXq3_DyW26ZBtgoHtDoimLjdNuAGNWldSuWY2kE_EgJgCWaHvpigm4bMViV5-6V246h_JrX1fWuzpPJfesRIuRnqAiJupFeUURoT3BJA5a74g-KanTaPO1O-M9cOq1tB_JaQqh7PycM4uZcooa_owMA" />
+            <img alt="Logo La Patrona" class="h-10 w-10 object-contain rounded-full" src="img/logo-la-patrona.png"
+                 onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'h-10 w-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm',textContent:'LP'}))" />
             <h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">La Patrona</h1>
         </div>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+            <button id="install-btn" class="hidden items-center gap-1 text-primary font-label-lg text-label-lg border border-primary/40 px-3 py-2 rounded-full active:scale-95 transition-transform" onclick="installApp()">
+                <span class="material-symbols-outlined text-[18px]">install_mobile</span>
+                Instalar
+            </button>
             <button class="text-primary font-label-lg text-label-lg bg-secondary-container px-4 py-2 rounded-full active:scale-95 transition-transform" onclick="scrollToMenu()">
                 Menú
             </button>
@@ -754,6 +767,37 @@ async function shareQR() {
         window.open(qrPath, "_blank");
     }
 }
+
+// ---- PWA: instalable + ícono en la pantalla de inicio ----
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+    });
+}
+
+let deferredInstallPrompt = null;
+const installBtn = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    installBtn.classList.remove('hidden');
+    installBtn.classList.add('flex');
+});
+
+async function installApp() {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installBtn.classList.add('hidden');
+    installBtn.classList.remove('flex');
+}
+
+window.addEventListener('appinstalled', () => {
+    installBtn.classList.add('hidden');
+    installBtn.classList.remove('flex');
+});
     </script>
 </body>
 </html>
